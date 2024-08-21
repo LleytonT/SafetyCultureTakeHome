@@ -9,6 +9,16 @@ import (
 	"github.com/gofrs/uuid"
 )
 
+/*
+I added new fields (Limit, Token) to the structs of FetchFolderRequest and FetchFolderResponse to handle pagination.
+The Limit field is used to specify the number of folders to be returned in a single request. By default, it is set to the maximum limit.
+The Token field is used to keep track of the current index of the folders being returned.
+
+For the tokens, I had to generate the tokens to be a string and so I used the base64 encoding to encode and decode the tokens.
+I've included a test case to show how the pagination works.
+
+It returns a FetchFolderResponse which contains the folders and the token for the next page.
+*/
 const MaxLimit = int(^uint(0) >> 1) // Maximum limit for pagination
 
 func GetAllFolders(req *FetchFolderRequest) (*FetchFolderResponse, error) {
